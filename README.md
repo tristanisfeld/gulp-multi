@@ -69,10 +69,10 @@ function getTask(task) {
 // ---- gulp newTask
 
 // ------------------------------------------------ Gulp Tasks
-gulp.task('browsersync', ['sass','ts'], getTask('browsersync'));
-gulp.task('sass', 			getTask('sass'));
+gulp.task('browsersync', ['sass','ts'],	getTask('browsersync'));
+gulp.task('sass',			getTask('sass'));
 gulp.task('ts',				getTask('typescript'));
-gulp.task('newTask', 			getTask('newTask'));
+gulp.task('newTask',			getTask('newTask'));
   
 // ------------------------------------------------ Gulp watch
 gulp.task('watch', ['ts', 'sass'], function() {
@@ -135,10 +135,10 @@ You can see our `getTask` function in action under the section commented "Gulp T
 As mentioned earlier, you may call tasks which require that other tasks be called before that task gets run. Here, you can see how you would do that the same way in a single page gulpfile, with our get task function. 
 ```javascript
 // ------------------------------------------------ Gulp Tasks
-gulp.task('browsersync', ['sass','ts'], getTask('browsersync'));
-gulp.task('sass', 			getTask('sass'));
+gulp.task('browsersync', ['sass','ts'],	getTask('browsersync'));
+gulp.task('sass',			getTask('sass'));
 gulp.task('ts',				getTask('typescript'));
-gulp.task('newTask', 			getTask('newTask'));
+gulp.task('newTask',			getTask('newTask'));
 ```
   
   
