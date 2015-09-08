@@ -172,7 +172,7 @@ gulp.task('default', ['sass', 'ts', 'browsersync'], function() {
     
 --------------------------------------------------------------------------
 ## Example task files
-The gulp task files is where the magic happens. Here you can put useful information in your headers and comments for yourself or your team, and wont cause a giant file. For example, if you are working in a team, or on an open source project, you can store your name, or project name, task description, etc. And since you are storing it as a gist, or submodule, or in your gulp plugin on npm as an example, it would be a good idea to list the dependencies for your tasks here as well, since they do not show up here. They will be in your project.json file, but you wont be listing them. But this is a good thing, since you can store the task as a gist or something, you can easily see the requirements when you use it again, or when anyone else on your team or working with your project or uses your tasks outside of the project. .  
+The gulp task files is where the magic happens. Here you can put useful information in your headers and comments for yourself or your team, and wont cause a giant file. For example, if you are working in a team, or on an open source project, you can store your name, or project name, task description, etc. And since you are storing it as a gist, or submodule, or in your gulp plugin on npm as an example, it would be a good idea to list the dependencies for your tasks here as well, since they do not show up here. They will be in your project.json file, but you wont be listing them. But this is a good thing, since you can store the task as a gist or something, you can easily see the requirements when you use it again, or when anyone else on your team or working with your project or uses your tasks outside of the project.  
   
 **NOTE:** it would be a good idea to link them to this tutorial in your projects README.md or docs files, or some other tutorial if you prefer so they know how to use multi task files.
 
@@ -211,19 +211,20 @@ module.exports = function(gulp, plugins) {
 
 You can see how we go about using the task files from this example. We require our config file. We export the function with nodes `module.exports, pass our gulp and plugins variables so when we call our task, that's what our gulpfile will pass the function containing our task. And we pass our gulp task into a stream, and return the stream at the end of the task.  
   
-In between the start task and end task comments is where you would put the task code. This file does seem to contain some things that you might feel like you don't want to type out everytime. That brings us to that fancy newTask task we seen earlier. That example is listed in the utility function down below. I simple create a template file and that task creates a new one for me whenever I run it. I just need to rename it, and edit between those comments.
-
-So we can also see that there is a plugin commented out, gulp-plumber. So if you get someone elses task file or someone else gets yours, they can simply comment out or remove it. Or you can provide options for yourself and comment them when not using, etc.
-
-In our sass plugin, we pass in our config.sass.opts, which is just an object in our config file for our sass task. You will see and example of that in the next section "Configuration File".
-
-Not all of the tasks will follow that standard return stream format as the example above. Typescript for example definitely might take some time to figure out. Especially if you aren't to familiar with node or gulp, but once you understand streams and how gulp runs tasks a little better, it will be quite easy to write your own tasks, which will differ vastly from the tutorials or npm examples. I will provide some links to resources at the thend under a section called "Resources". 
-
+In between the start task and end task comments is where you would put the task code. This file does seem to contain some things that you might feel like you don't want to type out everytime. That brings us to that fancy newTask task we seen earlier. That example is listed in the utility function down below. I simple create a template file and that task creates a new one for me whenever I run it. I just need to rename it, and edit between those comments.  
+  
+So we can also see that there is a plugin commented out, gulp-plumber. So if you get someone elses task file or someone else gets yours, they can simply comment out or remove it. Or you can provide options for yourself and comment them when not using, etc.  
+  
+In our sass plugin, we pass in our config.sass.opts, which is just an object in our config file for our sass task. You will see and example of that in the next section "Configuration File".  
+  
+Not all of the tasks will follow that standard return stream format as the example above. Typescript for example definitely might take some time to figure out. Especially if you aren't to familiar with node or gulp, but once you understand streams and how gulp runs tasks a little better, it will be quite easy to write your own tasks, which will differ vastly from the tutorials or npm examples. I will provide some links to resources at the thend under a section called "Resources".  
+  
 ### typescript
 ```javascript
 // =======================================================
 // Gulp Typescript - Tanspiles typescript to js
 // =======================================================
+// npm install --save-dev gulp-typescript gulp-sourcemaps
 var config 				= require('../config.js');
 
 module.exports = function(gulp, plugins) {
@@ -245,16 +246,18 @@ module.exports = function(gulp, plugins) {
 ```
 
 As you can see, the return doesn't just return stream. it returns: `stream.js.pipe(plugins.sourcemaps.write('.')).pipe(gulp.dest(config.typescript.dest));`
-Just append the requirements to the return stream variable as needed for the plugin. If you know what node streams are, then that's great, you should continue to the browsersync task below, or continue to the next section. For those who aren't so familiar, see the references below, and just for now, think of them as your passing to your return statement. We created `var stream = gulp.src(...)` containing our sourcefile location that we are passing to the gulp task. We then `.pipe(...)` the plugins. Quite literally piping the stream forward, and repeating until the piping is done. At the end, we return the stream. Basically streams are taking data, and continuously working on it in memory, passing it forward to another plugin or module to work on that data. Until all of the data manipulation is done, and returned. This is a high level overview of course, but out of the perview of this tutorial, and see the resources below for more information.
-
+Just append the requirements to the return stream variable as needed for the plugin. If you know what node streams are, then that's great, you should continue to the browsersync task below, or continue to the next section. For those who aren't so familiar, see the references below, and just for now, think of them as your passing to your return statement. We created `var stream = gulp.src(...)` containing our sourcefile location that we are passing to the gulp task. We then `.pipe(...)` the plugins. Quite literally piping the stream forward, and repeating until the piping is done. At the end, we return the stream. Basically streams are taking data, and continuously working on it in memory, passing it forward to another plugin or module to work on that data. Until all of the data manipulation is done, and returned. This is a high level overview of course, but out of the perview of this tutorial, and see the resources below for more information.  
+  
 So if you come across another gulp-plugin like typescript, and trying to figure out how you would use it in our new multi task file setup, look at how the examples are shown. How are they returning the stream? If they are returning something, but not named stream, what are they returning? If the gulp task starts like this, `var someName = gulp.src(...)`, someName is the stream. So use that or use whatever you want to call it. And when you return it, just abpend the extra bits they have. Check out the typescript examples here and compare them to our example: https://www.npmjs.com/package/gulp-typescript . If the plugins examples don't return anything, then just put the code in between the start and end comments, and be sure to preend `plugins.` where it makes sense.  
-
-
+  
+  
 ### Browsersync
 ```javascript
 // =======================================================
 // Gulp Browsersync - Sets up browser dev
 // =======================================================
+// npm install --save-dev browser-sync gulp-sass gulp-typescript
+
 var config 			= require('../config.js');
 var browserSync 		= require('browser-sync').create();
 
@@ -273,7 +276,7 @@ module.exports = function(gulp, plugins) {
 };
 ```
     
-    
+As mentioned earlier, there will come a time when you want to run a task that is not a gulp plugin, and thus not prepended with `gulp-` and therefor not loaded by gulp-load-plugins. Like browser-sync here. In order to use it, simply require it in your task file.   
     
 --------------------------------------------------------------------------
 ## Configuration File
@@ -326,14 +329,16 @@ module.exports = {
   
 
 --------------------------------------------------------------------------
-## Utility functions
-
+## Utility functions  
+  
 ### newTask Example
 This is an example of a newTask function that I use in all of my projects. It's quite handy for quickly templating out code and formatting so that I don't have to write out the same code every time I need to create a new task (that I don't already have). For example, I use browsersync. Let's say that I want to use nodemon and have never written a nodemon task (or have and did not save it wherever I sabe my tasks, like a gist, or submodule). I would simply run in my shell `gulp newTask`. And in my config.js file, I have newTask preferences where `config.newTask.src` lists where I'm storing the file for gulp to copy and paste in my tasks folder which is defined in the `config.newtask.desk` portion. By default, gulp will copy the file exactly as is. If you want to change the name, `gulp-rename`: https://www.npmjs.com/package/gulp-rename , will allow you to do that easily. And in our config.js file, we just provide another parameter `config.newtask.outputname`.
 ```javascript
 // =======================================================
 // Gulp New Task - creates a new gulp task template
 // =======================================================
+// npm install gulp-rename
+
 var config 		= require('../config.js');
 
 module.exports = function(gulp, plugins) {
