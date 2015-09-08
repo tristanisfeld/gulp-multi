@@ -164,8 +164,28 @@ gulp.task('default', ['sass', 'ts', 'browsersync'], function() {
     
     
 --------------------------------------------------------------------------
-## Example File
+## Example task file
+```javascript
+// =======================================================
+// Gulp Browsersync - Sets up browser dev
+// =======================================================
+var config 			= require('../../gulp/config.js');
+var browserSync 		= require('browser-sync').create();
 
+module.exports = function(gulp, plugins) {
+	return function () {
+	var stream = 
+// -------------------------------------------- Start Task
+	browserSync.init(config.browsersync.opts);
+	
+	gulp.watch(config.sass.src, ['sass']);
+	gulp.watch(config.typescript.src, ['ts']);
+	gulp.watch(config.browsersync.watch).on('change', browserSync.reload);
+// ---------------------------------------------- End Task
+	return stream;
+	};
+};
+```
     
     
     
@@ -177,7 +197,25 @@ But we also store each task configuration in one simple object so then we only h
   
 --------------------------------------------------------------------------
 ## Utility functions
+### newTask Example
+```javascript
+// =======================================================
+// Gulp New Task - creates a new gulp task template
+// =======================================================
+var config 		= require('../../config/config.js');
 
+module.exports = function(gulp, plugins) {
+	return function() {
+	var stream = 
+// -------------------------------------------- Start Task
+	gulp.src(config.newtask.src)
+	.pipe(plugins.rename(config.newtask.outputName))
+	.pipe(gulp.dest(config.newtask.dest));
+// ---------------------------------------------- End Task
+	return stream;
+	};
+};
+```
   
   
   
