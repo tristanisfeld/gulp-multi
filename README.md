@@ -40,11 +40,12 @@ Other extra benefits:
   * Locally: `npm install --save-dev gulp-load-plugins`
 
 ### Some Notes on `gulp-load-plugins
-What gulp-load-plugins does is goes into your package.json file and loads all of your gulp plugins.
-**NOTE:** gulp-load-plugins will only load plugins that are prefaced with `gulp-`. This is not an issue with packages however. Packages like `del` for example, we can easily apply those in each task file that uses it.
+What gulp-load-plugins does is goes into your package.json file and loads all of your gulp plugins.  
+  
+**NOTE:** gulp-load-plugins will only load plugins that are prefaced with `gulp-`. This is not an issue with packages however. Packages like `del` for example, we can easily apply those in each task file that uses it.  
   
 You access the plugins in your task file with `plugins.pluginName`, accessing the plugins via dot notation.
-It also lists all the gulp plugins without having to preface the plugin names with gulp. So, when writing your tasks and piping, you only need to call `plugins.rename` instead of `plugins.gulp-rename`. It also then turns all of the gulp plugins with multiple `-`'s in the names to camelCase. For example, instead of  `plugins.long-task-name`, you would write `plugins.longTaskName`.
+It also lists all the gulp plugins without having to preface the plugin names with gulp. So, when writing your tasks and piping, you only need to call `plugins.rename` instead of `plugins.gulp-rename`. It also then turns all of the gulp plugins with multiple `-`'s in the names to camelCase. For example, instead of  `plugins.long-task-name`, you would write `plugins.longTaskName`.  
   
   
 --------------------------------------------------------------------------
@@ -276,10 +277,54 @@ module.exports = function(gulp, plugins) {
     
 --------------------------------------------------------------------------
 ## Configuration File
-But we also store each task configuration in one simple object so then we only have to edit the one config file whenever we want to add, remove, or import a new task 
+We store each task configuration in one simple object so then we only have to edit the one config file whenever we want to add, remove, or import a new task file.
+```javascript
+// =======================================================
+// Gulp Config
+// =======================================================
+// ---------------------------------------- Export Configs
+module.exports = {
+	autoprefixer: {
+		opts: {
+			browsers: ['last 3 versions']
+		}
+	},
+	browsersync: {
+		opts: {
+			server: './src/'
+		},
+		watch: [
+			'./src/bin/styles/**/*.css',
+			'./src/bin/scripts/**/*.js',
+			'./src/**/*.html'
+		]
+	},
+	sass: {
+		src: [
+			"./src/bin/styles/sass/**/*.{scss,sass}"
+		],
+		opts: { },
+		outputName: 'main.css',
+		dest: './build/css/'
+	},
+	typescript: {
+		src: [
+			'./src/bin/scripts/ts/**/*.ts'
+		],
+		dest: './build/js/'
+	},
+	newtask: {
+		src: [
+			"./gulp/utils/newTaskTemplate.js"
+		],
+		outputName: "TASK-TEMPLATE.js",
+		dest: "./gulp/tasks/"
+	}
+}
+```
   
   
-  
+
 --------------------------------------------------------------------------
 ## Utility functions
 
@@ -323,4 +368,9 @@ module.exports = function(gulp, plugins) {
 ```
   
   
-You can of course make it however you want. But this is the standard gulp plugin needs, so mine looks like this. 
+You can of course make it however you want. But this is the standard gulp plugin needs, so mine looks like this.  
+  
+  
+  
+## Resorces
+* Stream Handbook - https://github.com/substack/stream-handbook
