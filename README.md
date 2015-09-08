@@ -100,8 +100,9 @@ var gulp			= require('gulp'),
     plugins			= require('gulp-load-plugins')();
 ```
   
-Underneath that simple header I declare three variables. The needed `gulp` variable, `config`, and `plugins`. The config variable I will get into a little later, but basicly what I've done is created a `gulp` folder in my project directory, which has a few other folders. One of those is `tasks` and another is `utilities`. The config variable is a config.js file that I use to store all of the task configurations.
-**NOTE:** That `plugins			= require('gulp-load-plugins')();` contains `()` after the require statement. If you forget this, you will run into errors. So please ensure that you use how we've declared it here. `var plugins = require('gulp-load-plugins')();`
+Underneath that simple header I declare three variables. The needed `gulp` variable, `config`, and `plugins`. The config variable I will get into a little later, but basicly what I've done is created a `gulp` folder in my project directory, which has a few other folders. One of those is `tasks` and another is `utilities`. The config variable is a config.js file that I use to store all of the task configurations.  
+  
+**NOTE:** That `plugins = require('gulp-load-plugins')();` contains `()` after the require statement. If you forget this, you will run into errors. So please ensure that you use how we've declared it here. `var plugins = require('gulp-load-plugins')();`
   
   
   
