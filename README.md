@@ -26,7 +26,10 @@ Your gulpfiles are often then tightly coupled to the project you are working on.
 With a gulp multi task file configuration will help with the problems mentioned above. That's not to say that a multi task file set up can not also become that way if poorly designed. And at first, it can be tricky to wrap your head around. Basicly what this does is take a gulpfile which can be anywhere from 50 lines to multiple hundreds of lines, and turns it into a couple dozen and splits your tasks up into individual tasks with their own file. You can then do a few other nifty things to help manage this, which I will get into a little later. But the best part, is that you can then save your tasks as gists and import them in easily to each new project, share them with others, with very little configuration.
   
 This also allows for you to be able to leave lots of comments in your gulp tasks, and comment out certain parameters not used in every project, but often enough to not want to have to look at the documentation everytime you need it.
-  
+
+Other extra benefits:
+* Using external config file can provide autocomplete functionality in many editors
+  * Using visual studio code for example, requiring an external file gives you access to autocomplete. Storing the source location as a property in a task object, you get `config.` listing all of your tasks, then `config.taskName.` listing all of your task options, resulting in `config.taskName.src` and `config.taskName.dest` etc. Nice! 
   
   
 --------------------------------------------------------------------------
@@ -35,10 +38,13 @@ This also allows for you to be able to leave lots of comments in your gulp tasks
   * Globally: `npm install --global gulp` and locally to your project `npm install --save-dev gulp`
 * `gulp-load-plugins` - https://www.npmjs.com/package/gulp-load-plugins
   * Locally: `npm install --save-dev gulp-load-plugins`
-  
+
+### Some Notes on `gulp-load-plugins
 What gulp-load-plugins does is goes into your package.json file and loads all of your gulp plugins.
-**NOTE:** gulp will only load plugins that are prefaced with `gulp-`. This is not an issue with packages like `del` for example, as we can easily apply those in each task file that uses it. Explained in this tutorial.
+**NOTE:** gulp-load-plugins will only load plugins that are prefaced with `gulp-`. This is not an issue with packages however. Packages like `del` for example, we can easily apply those in each task file that uses it.
   
+You access the plugins in your task file with `plugins.pluginName`, accessing the plugins via dot notation.
+It also lists all the gulp plugins without having to preface the plugin names with gulp. So, when writing your tasks and piping, you only need to call `plugins.rename` instead of `plugins.gulp-rename`. It also then turns all of the gulp plugins with multiple `-`'s in the names to camelCase. For example, instead of  `plugins.long-task-name`, you would write `plugins.longTaskName`.
   
   
 --------------------------------------------------------------------------
@@ -197,12 +203,14 @@ But we also store each task configuration in one simple object so then we only h
   
 --------------------------------------------------------------------------
 ## Utility functions
+
 ### newTask Example
+This is an example of a newTask function that I use in all of my projects. It's quite handy for quickly templating out code and formatting so that I don't have to write out the same code every time I need to create a new task (that I don't already have). For example, I use browsersync. Let's say that I want to use nodemon and have never written a nodemon task (or have and did not save it wherever I sabe my tasks, like a gist, or submodule). I would simply run in my shell `gulp newTask`. And in my config.js file, I have newTask preferences where `config.newTask.src` lists where I'm storing the file for gulp to copy and paste in my tasks folder which is defined in the `config.newtask.desk` portion. By default, gulp will copy the file exactly as is. If you want to change the name, `gulp-rename`: https://www.npmjs.com/package/gulp-rename , will allow you to do that easily. And in our config.js file, we just provide another parameter `config.newtask.outputname`.
 ```javascript
 // =======================================================
 // Gulp New Task - creates a new gulp task template
 // =======================================================
-var config 		= require('../../config/config.js');
+var config 		= require('../../gulp/config.js');
 
 module.exports = function(gulp, plugins) {
 	return function() {
