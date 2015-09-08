@@ -17,9 +17,9 @@ function getTask(task) {
 
 // ------------------------------------------------ Gulp Tasks
 gulp.task('browsersync', ['sass','ts'], getTask('browsersync'));
-gulp.task('sass',           getTask('sass'));
-gulp.task('ts',             getTask('typescript'));
-gulp.task('newTask',            getTask('newTask'));
+gulp.task('sass',                       getTask('sass'));
+gulp.task('ts',                         getTask('typescript'));
+gulp.task('newTask',                    getTask('newTask'));
 
 // ------------------------------------------------ Gulp watch
 gulp.task('watch', ['ts', 'sass'], function() {
